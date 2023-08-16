@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Статус пользователя</title>
+</head>
+<body>
+  <h1>Статус пользователя</h1>
+  <p><strong>Операционная система:</strong> <span id="os"></span></p>
+  <p><strong>IP-адрес:</strong> <span id="ip"></span></p>
+  <p><strong>Скорость интернета:</strong> <span id="speed"></span></p>
+  <p><strong>Пинг:</strong> <span id="ping"></span></p>
+
+  <script src="https://unpkg.com/ping.js"></script>
+  <script>
+    // Получение операционной системы
+    var os = navigator.platform;
+    document.getElementById("os").innerText = os;
+
+    // Получение IP-адреса
+    fetch('https://api.ipify.org?format=json')
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById("ip").innerText = data.ip;
+      })
+      .catch(error => {
+        console.error('Ошибка получения IP-адреса:', error);
+      });
+
+    // Получение пинга с помощью ping.js
+    var ping = new Ping();
+    ping.ping("https://www.google.com", function(time) {
+      document.getElementById("ping").innerText = time + " мс";
+    });
+  </script>
+</body>
+</html>
